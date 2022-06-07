@@ -1,0 +1,6 @@
+[submodule "components/minitor"]
+	path = components/minitor
+	url = https://github.com/jpbland1/Minitor
+[submodule "components/wolfssl"]
+	path = components/wolfssl
+	url = https://github.com/jpbland1/wolfssl
