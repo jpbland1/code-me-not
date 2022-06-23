@@ -24,10 +24,6 @@
 #include "wifi_connect.h"
 #include "minitor.h"
 
-#include "test/circuit.h"
-#include "test/issi.h"
-#include "test/fd_tree.h"
-
 #include <esp_event.h>
 #include "esp_netif.h"
 #include <esp_http_server.h>
