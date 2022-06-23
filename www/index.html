@@ -1,0 +1,80 @@
+<html>
+  <head>
+    <title>Code Me Not</title>
+
+    <link rel="stylesheet" href="/assets/css/index.css">
+  </head>
+
+  <body>
+    <div id="app">
+      <div class="edit-link" :class="{ active: showEditLink, inactive: !showEditLink }">
+        <h1> {{ editLinkHead }} </h1>
+
+        <span @click="closeEditLink" class="close-edit-link">X</span>
+
+        <form @submit.prevent="saveLink">
+          <div>
+            <label>Name</label>
+            <input type="text" v-model="workingLink.name" />
+          </div>
+
+          <div>
+            <label>Type</label>
+            <select v-model="workingLink.type">
+              <option disabled default>Please Select A Pin Type</option>
+              <option value=0>Simple Pin Control</option>
+              <option value=2>Interrupt Pin Control</option>
+            </select>
+          </div>
+
+          <!-- enum 0 for simple pin -->
+          <div v-if="linkType[workingLink.type] == 'SIMPLE_PIN'">
+            <label>Pin num (should match the esp32 labels)</label>
+            <input type="number" v-model="workingLink.pin.num" />
+          </div>
+
+          <div v-else-if="linkType[workingLink.type] == 'INTERRUPT_PIN'">
+            <div>
+              <label>Pin num (should match the esp32 labels)</label>
+              <input type="number" v-model="workingLink.interruptPin.num" />
+            </div>
+
+            <div>
+              <label>Milisecond delay</label>
+              <input type="number" v-model="workingLink.interruptPin.msDelay" />
+            </div>
+
+            <select v-model="workingLink.interruptPin.responseType">
+              <option disabled default>Please Select A Reponse Type</option>
+              <option value=0>Simple Pin Control</option>
+            </select>
+
+            <div v-if="linkType[workingLink.interruptPin.responseType] == 'SIMPLE_PIN'">
+              <label>Response pin num (should match the esp32 labels)</label>
+              <input type="number" v-model="workingLink.interruptPin.pin.num" />
+            </div>
+          </div>
+
+          <div>
+            <button>Save</button>
+          </div>
+        </form>
+      </div>
+
+      <button @click="newLink">Add new pin</button>
+
+      <div v-for="link in links">
+        {{ link.name }}
+        <button @click="editLink( link )">Edit</button>
+
+        <div v-if="linkType[link.type] == 'SIMPLE_PIN'">
+          <button @click="simplePinToggle( link )">{{ link.pin.state == true ? 'on' : 'off' }}</button>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script src="/assets/js/axios.min.js"></script>
+  <script src="/assets/js/vue.js"></script>
+  <script src="/assets/js/app.js"></script>
+</html>

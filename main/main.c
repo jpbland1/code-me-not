@@ -591,7 +591,7 @@ static esp_err_t asset_get_handler( httpd_req_t *req )
     FILE *fd = NULL;
     struct stat file_stat;
 
-    const char *filename = get_path_from_uri(filepath, "/sdcard/local_link",
+    const char *filename = get_path_from_uri(filepath, "/sdcard/www",
                                              req->uri, sizeof(filepath));
     ESP_LOGE( TAG, "%s", filename );
 
@@ -678,7 +678,7 @@ static const httpd_uri_t get_assets = {
 static esp_err_t index_get_handler(httpd_req_t *req)
 {
   FILE *fd = NULL;
-  const char* index_name = "/sdcard/local_link/index.html";
+  const char* index_name = "/sdcard/www/index.html";
 
   fd = fopen( index_name, "r" );
 
